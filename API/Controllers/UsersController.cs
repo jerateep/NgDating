@@ -2,6 +2,7 @@
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace API.Controllers
             _ent = ent;
         }
         [HttpGet]
-        public IEnumerable<AppUser> GetUsers() => _ent.AppUser.ToList();
+        public async Task<IEnumerable<AppUser>> GetUsers() => await _ent.AppUser.ToListAsync();
         [HttpGet("{_id}")]
-        public AppUser GetUsers(int _id) => _ent.AppUser.Find(_id);
+        public async Task<AppUser> GetUsers(int _id) => await _ent.AppUser.FindAsync(_id);
     }
 }
