@@ -20,7 +20,7 @@ namespace API.Controllers
         {
             _ent = ent;
         }
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IEnumerable<AppUser>> GetUsers() => await _ent.AppUser.ToListAsync();
         [HttpGet("{_id}")]

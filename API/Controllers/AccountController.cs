@@ -52,13 +52,13 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>>Login(LoginDto _login)
         {
-            var user = await _ent.AppUser.SingleOrDefaultAsync(o => o.UserName == _login.UserName);
+            var user = await _ent.AppUser.SingleOrDefaultAsync(o => o.UserName == _login.username);
             if (user == null)
             {
                 return Unauthorized("Invalid Username");
             }
             using var hmac = new HMACSHA512(user.PasswordSalt);
-            var comoutedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(_login.Password));
+            var comoutedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(_login.password));
             for (int i = 0; i < comoutedHash.Length; i++)
             {
                 if (comoutedHash[i] != user.PasswordHash[i])

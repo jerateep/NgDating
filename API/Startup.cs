@@ -35,15 +35,8 @@ namespace API
         {
             services.AddApplicationServices(Configuration);
             services.AddControllers();
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("https://localhost:4200");
-                    });
-            });
-
+            services.AddCors();
+            services.AddIdentityServices(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -88,7 +81,9 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(
+               options => options.WithOrigins("https://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+           );
             app.UseAuthentication();
             app.UseAuthorization();
 
