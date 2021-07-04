@@ -29,23 +29,23 @@ namespace API.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDto _register)
         {
-            if (await UserExists(_register.UserName))
+            if (await UserExists(_register.userName))
             {
                 return BadRequest("Username is token");
             }
             using var hmac = new HMACSHA512();
             var user = new AppUser
             {
-                UserName = _register.UserName,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(_register.Password)),
+                UserName = _register.userName,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(_register.password)),
                 PasswordSalt = hmac.Key
             };
             _ent.AppUser.Add(user);
             await _ent.SaveChangesAsync();
             return new UserDTO
             {
-                UserName = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                userName = user.UserName,
+                token = _tokenService.CreateToken(user)
             };
         }
 
@@ -68,8 +68,8 @@ namespace API.Controllers
             }
             return new UserDTO
             {
-                UserName = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                userName = user.UserName,
+                token = _tokenService.CreateToken(user)
             };
         }
 
