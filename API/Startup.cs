@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Extensions;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace API
 {
@@ -34,7 +36,9 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(Configuration);
-            services.AddControllers();
+            services.AddControllers()
+           .AddJsonOptions(o => o.JsonSerializerOptions
+               .ReferenceHandler = ReferenceHandler.Preserve);
             services.AddCors();
             services.AddIdentityServices(Configuration);
             services.AddSwaggerGen(c =>

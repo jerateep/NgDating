@@ -26,7 +26,8 @@ namespace API.Data
             }
         }
         public DbSet<AppUser> AppUser { get; set; }
- 
+        public DbSet<Photo> Photos { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
