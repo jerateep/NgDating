@@ -24,12 +24,20 @@ namespace API.Controllers
             _userRepo = userRepo;
             _mapper = mapper;
         }
+        //[HttpGet]
+        //public async Task<IEnumerable<MemberDto>> GetUsers()
+        //{
+        //    var users = await _userRepo.GetMembersAsync();
+        //    return _mapper.Map<IEnumerable<MemberDto>>(users);
+        //}
+
         [HttpGet]
-        public async Task<IEnumerable<MemberDto>> GetUsers()
+        public async Task<MemberDto[]> GetUsers()
         {
             var users = await _userRepo.GetMembersAsync();
-            return _mapper.Map<IEnumerable<MemberDto>>(users);
+            return _mapper.Map<MemberDto[]>(users);
         }
+
         [HttpGet("{_username}")]
         public async Task<MemberDto> GetUsers(string _username) 
         {
